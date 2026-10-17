@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0e7">
+  <meta name="description" content="Aditya Kaul's selected research in computational physics, numerical methods, remote sensing, and astrophysics.">
+
+  <title>{{ site.title | default: "Aditya Kaul" | escape }} — Research</title>
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+
+<body>
+  <a class="skip-link" href="#research">Skip to research</a>
+
+  <header class="site-header page-width">
+    <a
+      class="brand"
+      href="{{ '/' | relative_url }}"
+      aria-label="Aditya Kaul, home"
+    >
+      <span class="brand-mark" aria-hidden="true">AK</span>
+      <span>RESEARCH PORTFOLIO</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/aditya-9876543210">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero page-width" aria-labelledby="name">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          Mathematics / Physics / Computation
+        </p>
+
+        <h1 id="name">
+          Aditya<br>
+          <em>Kaul</em>
+        </h1>
+
+        <p class="hero-title">
+          Modeling complex systems.<br>
+          Asking better questions.
+        </p>
+
+        <p class="hero-description">
+          I'm a student researcher exploring numerical methods,
+          fluid and plasma dynamics, and remote sensing.
+        </p>
+
+        <a class="button" href="#research">
+          Explore the research
+          <span aria-hidden="true">↘</span>
+        </a>
+      </div>
+
+      <div class="hero-photo">
+        {% assign portrait = site.static_files | where: "path", "/assets/profile.jpg" | first %}
+
+        {% if portrait %}
+          <img
+            src="{{ portrait.path | relative_url }}"
+            alt="Aditya Kaul"
+            fetchpriority="high"
+          >
+        {% else %}
+          <div class="photo-placeholder">
+            <span class="eyebrow">Portrait</span>
+            <p>Your photo here</p>
+            <small>Upload assets/profile.jpg</small>
+          </div>
+        {% endif %}
+
+        <svg
+          class="portrait-seam"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M14 0 L0 100"
+            fill="none"
+            stroke="#b33a2e"
+            stroke-width="3"
+            vector-effect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <section
+      class="research-section page-width"
+      id="research"
+      aria-labelledby="research-heading"
+    >
+      <div class="section-top">
+        <div>
+          <p class="eyebrow">Questions. Methods. Evidence.</p>
+          <h2 id="research-heading">Selected research.</h2>
+        </div>
+
+        <p class="section-description">
+          A few projects at the intersection of mathematics
+          and physical systems.
+        </p>
+      </div>
+
+      <div class="projects">
+        {{ content }}
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer page-width" id="contact">
+    <div>
+      <p class="eyebrow">Continue the conversation</p>
+      <h2>Get in touch.</h2>
+
+      <!-- Replace this placeholder with your email. -->
+      <p class="contact-email">[Add your email]</p>
+    </div>
+
+    <div class="footer-meta">
+      <a href="https://github.com/aditya-9876543210">GitHub ↗</a>
+      <p>© {{ site.time | date: "%Y" }} Aditya Kaul</p>
+    </div>
+  </footer>
+</body>
+</html>
