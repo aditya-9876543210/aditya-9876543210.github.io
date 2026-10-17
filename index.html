@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- IMAGE PATHS: preserve these existing filenames when changing the design.
+     researchPFP.jpg | aegis-results.png | propulsion-results.png | sees-map.png | astrophysics-results.png -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,30 +12,31 @@
   <style>
     :root {
       --paper: #f4f0e7;
-      --ink: #202826;
+      --ink: #24302b;
       --muted: #606963;
-      --accent: #b33a2e;
-      --line: #d3d2c7;
+      --accent: #ad4434;
+      --line: #d4d4c9;
       --serif: Georgia, "Times New Roman", serif;
       --sans: Arial, Helvetica, sans-serif;
       --mono: "Courier New", Courier, monospace;
     }
-
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
     html { scroll-behavior: smooth; scroll-padding-top: 24px; }
     body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.8 var(--sans); }
     a { color: inherit; text-underline-offset: 4px; }
     a:hover { color: var(--accent); }
+    button { font: inherit; }
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
     ::selection { background: var(--accent); color: white; }
-    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3, h4, p { margin: 0; }
     img { display: block; max-width: 100%; }
     .page-width { width: calc(100% - 64px); max-width: 1160px; margin-inline: auto; }
     .eyebrow { font: 400 10px/1.6 var(--mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
     .skip-link { position: fixed; top: -80px; left: 16px; padding: 10px 16px; background: var(--ink); color: white; z-index: 100; }
     .skip-link:focus { top: 12px; }
 
+    /* HEADER */
     .site-header { min-height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
     .brand { display: flex; gap: 14px; align-items: center; text-decoration: none; font: 400 10px/1.4 var(--mono); letter-spacing: 1.4px; }
     .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--accent); color: var(--accent); font: 25px/1 var(--serif); letter-spacing: -2px; padding-right: 2px; }
@@ -57,22 +60,60 @@
     .photo-placeholder small { font: 11px/1.5 var(--mono); color: var(--muted); }
     .portrait-seam { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-    /* RESEARCH */
+    /* RESEARCH INTRO */
     .research-section { padding-block: 76px 86px; }
-    .section-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 30px; }
+    .section-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 32px; }
     h2 { font: 400 43px/1.15 var(--serif); letter-spacing: -1px; }
     .section-top h2 { margin-top: 12px; }
-    .section-description { max-width: 280px; font-size: 14px; color: var(--muted); }
-    .projects { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
-    .project { padding: 32px; background: #fbf9f3; border: 1px solid var(--line); transition: border-color .2s; }
-    .project:hover { border-color: var(--accent); }
-    .project-meta { font: 400 10px/1.6 var(--mono); letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
-    .project h3 { margin-top: 20px; font: 400 29px/1.2 var(--serif); letter-spacing: -.5px; }
-    .project > p:not(.project-meta) { margin-top: 17px; font-size: 14px; line-height: 1.85; color: #535e57; }
-    .project .result { margin-top: 24px; padding-left: 14px; border-left: 2px solid var(--accent); font-size: 13px; }
-    .result strong { color: var(--ink); }
-    .project a { color: var(--accent); overflow-wrap: anywhere; }
-    .project img { width: 100%; height: auto; margin-top: 20px; }
+    .section-description { max-width: 290px; font-size: 14px; color: var(--muted); }
+    .projects { display: grid; gap: 24px; }
+
+    /* MUTED PROJECT COLORS */
+    .tone-rust { --tone: #a44d39; --wash: #efe0d4; --panel: #fcf8f3; --soft: #f3e9df; }
+    .tone-blue { --tone: #3d6377; --wash: #dde7ec; --panel: #f5f8f9; --soft: #e7eef1; }
+    .tone-sage { --tone: #506d57; --wash: #e0e8dc; --panel: #f6f8f2; --soft: #e9eee2; }
+    .tone-gold { --tone: #87672c; --wash: #eee3c9; --panel: #fcf9f0; --soft: #f3ecd9; }
+
+    /* ALTERNATING RESEARCH ROWS */
+    .research-project { min-width: 0; overflow: hidden; background: var(--panel); border: 1px solid var(--line); transition: border-color .25s; }
+    .research-project:hover, .research-project:focus-within { border-color: var(--tone); }
+    .project-preview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); cursor: pointer; transition: grid-template-columns .35s ease; }
+    .project-copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 38px 42px; }
+    .project-meta { color: var(--tone); font: 400 10px/1.6 var(--mono); letter-spacing: 1px; text-transform: uppercase; }
+    .project-copy h3 { margin-top: 17px; max-width: 460px; font: 400 clamp(31px, 3.4vw, 44px)/1.12 var(--serif); letter-spacing: -1px; }
+    .project-teaser { max-width: 400px; margin-top: 19px; font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .project-toggle { display: inline-flex; align-items: center; gap: 18px; padding: 0; margin-top: 25px; border: 0; background: none; color: var(--tone); font: 11px/1.5 var(--mono); cursor: pointer; }
+    .toggle-icon { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid currentColor; font-size: 19px; transition: transform .3s; }
+    .project-visual { position: relative; min-width: 0; min-height: 310px; margin: 0; overflow: hidden; border-left: 1px solid var(--line); background: var(--wash); transition: min-height .35s ease; }
+    .project-image { position: absolute; inset: 0; width: 100%; height: 100%; padding: 26px; object-fit: contain; opacity: 0; transition: opacity .25s; }
+    .project-visual.has-image .project-image { opacity: 1; }
+    .project-visual.has-image .image-placeholder { display: none; }
+    .image-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 26px; color: var(--tone); background-image: linear-gradient(rgba(40,50,45,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(40,50,45,.04) 1px, transparent 1px); background-size: 42px 42px; }
+    .image-placeholder .figure-number { font: italic 400 78px/1 var(--serif); opacity: .45; }
+    .image-placeholder p { font: 400 23px/1.3 var(--serif); text-align: center; }
+    .image-placeholder small { font: 10px/1.6 var(--mono); letter-spacing: .8px; text-transform: uppercase; }
+    .research-project:nth-child(even) .project-copy { order: 2; }
+    .research-project:nth-child(even) .project-visual { order: 1; border-left: 0; border-right: 1px solid var(--line); }
+
+    /* EXPANDED ROW: more space for the figure, details underneath. */
+    .research-project.is-open .project-preview { grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr); }
+    .research-project.is-open:nth-child(even) .project-preview { grid-template-columns: minmax(0, 1.16fr) minmax(0, .84fr); }
+    .research-project.is-open .project-visual { min-height: 410px; }
+    .research-project.is-open .toggle-icon { transform: rotate(45deg); }
+    .project-details { padding: 34px 42px 36px; border-top: 1px solid var(--line); }
+    .project-details:not([hidden]) { animation: reveal .25s ease-out; }
+    .detail-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); gap: 38px; align-items: start; }
+    .detail-copy h4 { font: 400 26px/1.2 var(--serif); letter-spacing: -.4px; }
+    .detail-copy p { margin-top: 14px; font-size: 14px; line-height: 1.9; color: var(--muted); }
+    .result-panel { padding: 23px 25px; background: var(--soft); border-left: 2px solid var(--tone); }
+    .result-panel .eyebrow { color: var(--tone); }
+    .result-panel > p:last-child { margin-top: 12px; font-size: 14px; line-height: 1.8; }
+    .project-bottom { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 22px; padding-top: 25px; margin-top: 27px; border-top: 1px solid var(--line); }
+    .figure-caption { max-width: 440px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 9px; }
+    .project-links a { padding: 8px 12px; border: 1px solid var(--tone); color: var(--tone); font: 11px/1.5 var(--mono); text-decoration: none; transition: background .2s, color .2s; }
+    .project-links a:hover { background: var(--tone); color: white; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
     /* CONTACT */
     .site-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; padding-block: 38px 42px; border-top: 1px solid var(--line); }
@@ -80,13 +121,16 @@
     .contact-email { margin-top: 14px; font-size: 14px; overflow-wrap: anywhere; }
     .footer-meta { text-align: right; font: 11px/1.8 var(--mono); color: var(--muted); }
     .footer-meta p { margin-top: 14px; }
+    a, p { overflow-wrap: anywhere; }
 
     @media (max-width: 1000px) {
       .hero-copy { padding: 38px 40px 38px 28px; }
       .hero-photo { min-height: 550px; }
       .brand { font-size: 9px; }
+      .project-copy { padding: 30px; }
+      .project-details { padding: 30px; }
+      .detail-grid { gap: 26px; }
     }
-
     @media (max-width: 760px) {
       .page-width { width: calc(100% - 36px); }
       .site-header { min-height: 80px; gap: 16px; }
@@ -103,15 +147,20 @@
       .section-top { display: block; }
       .section-description { margin-top: 18px; max-width: 350px; }
       h2 { font-size: 36px; }
-      .projects { grid-template-columns: 1fr; }
-      .project { padding: 26px; }
+      .project-preview, .research-project.is-open .project-preview, .research-project.is-open:nth-child(even) .project-preview { grid-template-columns: minmax(0, 1fr); }
+      .project-copy, .research-project:nth-child(even) .project-copy { order: 1; padding: 27px; }
+      .project-visual, .research-project:nth-child(even) .project-visual { order: 2; min-height: 260px; border: 0; border-top: 1px solid var(--line); }
+      .project-copy h3 { font-size: 34px; }
+      .research-project.is-open .project-visual { min-height: 350px; }
+      .project-image { padding: 18px; }
+      .project-details { padding: 27px; }
+      .detail-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
       .site-footer { align-items: flex-start; flex-direction: column; }
       .footer-meta { text-align: left; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      * { transition: none !important; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
@@ -124,7 +173,6 @@
       <span class="brand-mark" aria-hidden="true">AK</span>
       <span>RESEARCH PORTFOLIO</span>
     </a>
-
     <nav aria-label="Main navigation">
       <a href="#research">Research</a>
       <a href="#contact">Contact</a>
@@ -138,162 +186,220 @@
       <div class="hero-copy">
         <p class="eyebrow">Mathematics / Physics / Computation</p>
         <h1 id="name">Aditya<br><em>Kaul</em></h1>
-
-        <p class="hero-title">
-          Modeling complex systems.<br>
-          Asking better questions.
-        </p>
-
-        <p class="hero-description">
-          I'm a student researcher exploring numerical methods,
-          fluid and plasma dynamics, and remote sensing.
-        </p>
-
-        <a class="button" href="#research">
-          Explore the research <span aria-hidden="true">↘</span>
-        </a>
+        <p class="hero-title">Modeling complex systems.<br>Asking better questions.</p>
+        <p class="hero-description">I'm a student researcher exploring numerical methods, fluid and plasma dynamics, and remote sensing.</p>
+        <a class="button" href="#research">Explore the research <span aria-hidden="true">↘</span></a>
       </div>
 
       <div class="hero-photo">
-        <!-- PHOTO: upload your image as assets/profile.jpg,
-             or change src below. -->
-        <img
-          id="portrait"
-          src="researchPFP.jpg"
-          alt="Aditya Kaul"
-          fetchpriority="high"
-          hidden
-        >
-
+        <!-- PHOTO: your portrait is researchPFP.jpg beside index.html. -->
+        <img id="portrait" src="researchPFP.jpg" alt="Aditya Kaul" fetchpriority="high" hidden>
         <div class="photo-placeholder" id="photo-placeholder">
           <span class="eyebrow">Portrait</span>
           <p>Your photo here</p>
           <small>A face behind the research.</small>
         </div>
-
-        <svg
-          class="portrait-seam"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M14 0 L0 100"
-            fill="none"
-            stroke="#b33a2e"
-            stroke-width="3"
-            vector-effect="non-scaling-stroke"
-          />
+        <svg class="portrait-seam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M14 0 L0 100" fill="none" stroke="#b33a2e" stroke-width="3" vector-effect="non-scaling-stroke"/>
         </svg>
       </div>
     </section>
 
-    <section
-      class="research-section page-width"
-      id="research"
-      aria-labelledby="research-heading"
-    >
+    <section class="research-section page-width" id="research" aria-labelledby="research-heading">
       <div class="section-top">
         <div>
           <p class="eyebrow">Questions. Methods. Evidence.</p>
           <h2 id="research-heading">Selected research.</h2>
         </div>
-
-        <p class="section-description">
-          Projects at the intersection of mathematics and physical systems.
-        </p>
+        <p class="section-description">A few questions I've been working on. Open a project to explore the methods, results, and materials.</p>
       </div>
-
-      <!-- EDIT RESEARCH: replace bracketed text with your results. -->
       <div class="projects">
-        <article class="project">
-          <p class="project-meta">01 / ASDRP · Numerical methods</p>
-          <h3>AEGIS</h3>
-
-          <p>
-            I develop numerical methods that balance accuracy in smooth
-            flow with stability near shocks. My AEGIS research includes
-            applications to the Euler equations and extensions to ideal
-            magnetohydrodynamics.
-          </p>
-
-          <p class="result">
-            <strong>Results:</strong>
-            [Add one or two sentences about your main findings.]
-          </p>
-
-          <!-- Replace the URLs and remove the comment markers when ready.
-          <p>
-            <a href="YOUR_PAPER_URL">Paper</a> ·
-            <a href="YOUR_CODE_URL">Code</a> ·
-            <a href="YOUR_POSTER_URL">Poster</a>
-          </p>
-          -->
+        <article class="research-project tone-rust" data-project aria-labelledby="aegis-title">
+          <!-- Click the preview or use the Explore project button. -->
+          <div class="project-preview">
+            <div class="project-copy">
+              <p class="project-meta">01 / ASDRP · Numerical methods</p>
+              <h3 id="aegis-title">AEGIS</h3>
+              <p class="project-teaser">Numerical methods for accurate smooth flow and stable shock capture, from Euler to ideal MHD.</p>
+              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="aegis-details" aria-label="Expand AEGIS">
+                <span class="toggle-label">Explore project</span>
+                <span class="toggle-icon" aria-hidden="true">+</span>
+              </button>
+            </div>
+            <figure class="project-visual">
+              <!-- IMAGE: keep this filename, or use the exact name of your uploaded file. -->
+              <img class="project-image" src="aegis-results.png" alt="AEGIS research figure" loading="lazy" decoding="async">
+              <div class="image-placeholder" aria-hidden="true">
+                <span class="figure-number">01</span>
+                <p>Research figure</p>
+                <small>Figure coming soon</small>
+              </div>
+            </figure>
+          </div>
+          <div class="project-details" id="aegis-details" role="region" aria-labelledby="aegis-title" hidden>
+            <div class="detail-grid">
+              <div class="detail-copy">
+                <h4>Behind the research</h4>
+                <p>I develop numerical methods that balance accuracy in smooth flow with stability near shocks. My AEGIS research includes applications to the Euler equations and extensions to ideal magnetohydrodynamics.</p>
+                <p>[Add a few sentences about your specific contribution, methods, and next steps.]</p>
+              </div>
+              <aside class="result-panel">
+                <p class="eyebrow">Key finding</p>
+                <p>[Add one or two sentences about your main findings.]</p>
+              </aside>
+            </div>
+            <div class="project-bottom">
+              <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
+              <div class="project-links" aria-label="AEGIS materials">
+                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                <a href="aegis-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              </div>
+            </div>
+          </div>
         </article>
 
-        <article class="project">
-          <p class="project-meta">02 / ASDRP · Plasma simulation</p>
-          <h3>Computational propulsion</h3>
-
-          <p>
-            I use computational models to investigate electric-propulsion
-            systems. [Add one sentence about your specific Hall-thruster
-            project and contribution.]
-          </p>
-
-          <p class="result">
-            <strong>Results:</strong> [Add your main result.]
-          </p>
-
-          <!--
-          <p>
-            <a href="YOUR_PAPER_URL">Paper</a> ·
-            <a href="YOUR_PRESENTATION_URL">Presentation</a>
-          </p>
-          -->
+        <article class="research-project tone-blue" data-project aria-labelledby="propulsion-title">
+          <!-- Click the preview or use the Explore project button. -->
+          <div class="project-preview">
+            <div class="project-copy">
+              <p class="project-meta">02 / ASDRP · Plasma simulation</p>
+              <h3 id="propulsion-title">Computational propulsion</h3>
+              <p class="project-teaser">Computational models of plasma behavior and electric-propulsion systems.</p>
+              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="propulsion-details" aria-label="Expand Computational propulsion">
+                <span class="toggle-label">Explore project</span>
+                <span class="toggle-icon" aria-hidden="true">+</span>
+              </button>
+            </div>
+            <figure class="project-visual">
+              <!-- IMAGE: keep this filename, or use the exact name of your uploaded file. -->
+              <img class="project-image" src="propulsion-results.png" alt="Computational propulsion research figure" loading="lazy" decoding="async">
+              <div class="image-placeholder" aria-hidden="true">
+                <span class="figure-number">02</span>
+                <p>Research figure</p>
+                <small>Figure coming soon</small>
+              </div>
+            </figure>
+          </div>
+          <div class="project-details" id="propulsion-details" role="region" aria-labelledby="propulsion-title" hidden>
+            <div class="detail-grid">
+              <div class="detail-copy">
+                <h4>Behind the research</h4>
+                <p>I use computational models to investigate electric-propulsion systems. [Add one sentence about your specific Hall-thruster project and contribution.]</p>
+                <p>[Add a few sentences about your specific contribution, methods, and next steps.]</p>
+              </div>
+              <aside class="result-panel">
+                <p class="eyebrow">Key finding</p>
+                <p>[Add your main result.]</p>
+              </aside>
+            </div>
+            <div class="project-bottom">
+              <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
+              <div class="project-links" aria-label="Computational propulsion materials">
+                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                <a href="propulsion-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              </div>
+            </div>
+          </div>
         </article>
 
-        <article class="project">
-          <p class="project-meta">03 / NASA SEES · Remote sensing</p>
-          <h3>Satellite land-cover analysis</h3>
-
-          <p>
-            I compared satellite-derived land-cover information with ground
-            observations to investigate classification errors and potential
-            improvements in the interpretation of remote-sensing data.
-          </p>
-
-          <p class="result">
-            <strong>Results:</strong>
-            [Add your main finding and study area.]
-          </p>
-
-          <!--
-          <p>
-            <a href="YOUR_MANUSCRIPT_URL">Manuscript</a> ·
-            <a href="YOUR_POSTER_URL">Poster</a>
-          </p>
-          -->
+        <article class="research-project tone-sage" data-project aria-labelledby="sees-title">
+          <!-- Click the preview or use the Explore project button. -->
+          <div class="project-preview">
+            <div class="project-copy">
+              <p class="project-meta">03 / NASA SEES · Remote sensing</p>
+              <h3 id="sees-title">Satellite land-cover analysis</h3>
+              <p class="project-teaser">Comparing satellite land-cover classifications with ground observations.</p>
+              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="sees-details" aria-label="Expand Satellite land-cover analysis">
+                <span class="toggle-label">Explore project</span>
+                <span class="toggle-icon" aria-hidden="true">+</span>
+              </button>
+            </div>
+            <figure class="project-visual">
+              <!-- IMAGE: keep this filename, or use the exact name of your uploaded file. -->
+              <img class="project-image" src="sees-map.png" alt="Satellite land-cover research figure" loading="lazy" decoding="async">
+              <div class="image-placeholder" aria-hidden="true">
+                <span class="figure-number">03</span>
+                <p>Research figure</p>
+                <small>Figure coming soon</small>
+              </div>
+            </figure>
+          </div>
+          <div class="project-details" id="sees-details" role="region" aria-labelledby="sees-title" hidden>
+            <div class="detail-grid">
+              <div class="detail-copy">
+                <h4>Behind the research</h4>
+                <p>I compared satellite-derived land-cover information with ground observations to investigate classification errors and potential improvements in the interpretation of remote-sensing data.</p>
+                <p>[Add a few sentences about your specific contribution, methods, and next steps.]</p>
+              </div>
+              <aside class="result-panel">
+                <p class="eyebrow">Key finding</p>
+                <p>[Add your main finding and study area.]</p>
+              </aside>
+            </div>
+            <div class="project-bottom">
+              <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
+              <div class="project-links" aria-label="Satellite land-cover analysis materials">
+                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                <a href="sees-map.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              </div>
+            </div>
+          </div>
         </article>
 
-        <article class="project">
-          <p class="project-meta">04 / Horizon · Astrophysics</p>
-          <h3>Astrophysical energy extraction</h3>
-
-          <p>
-            I studied Blandford–Znajek energy extraction and magnetic
-            reconnection to investigate mechanisms that help explain
-            the power of active galactic nuclei and their jets.
-          </p>
-
-          <p class="result">
-            <strong>Findings:</strong> [Add your central conclusion.]
-          </p>
-
-          <!--
-          <p><a href="YOUR_MANUSCRIPT_URL">Manuscript</a></p>
-          -->
+        <article class="research-project tone-gold" data-project aria-labelledby="astrophysics-title">
+          <!-- Click the preview or use the Explore project button. -->
+          <div class="project-preview">
+            <div class="project-copy">
+              <p class="project-meta">04 / Horizon · Astrophysics</p>
+              <h3 id="astrophysics-title">Astrophysical energy extraction</h3>
+              <p class="project-teaser">Investigating energy extraction mechanisms behind active galactic nuclei and their jets.</p>
+              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="astrophysics-details" aria-label="Expand Astrophysical energy extraction">
+                <span class="toggle-label">Explore project</span>
+                <span class="toggle-icon" aria-hidden="true">+</span>
+              </button>
+            </div>
+            <figure class="project-visual">
+              <!-- IMAGE: keep this filename, or use the exact name of your uploaded file. -->
+              <img class="project-image" src="astrophysics-results.png" alt="Astrophysics research figure" loading="lazy" decoding="async">
+              <div class="image-placeholder" aria-hidden="true">
+                <span class="figure-number">04</span>
+                <p>Research figure</p>
+                <small>Figure coming soon</small>
+              </div>
+            </figure>
+          </div>
+          <div class="project-details" id="astrophysics-details" role="region" aria-labelledby="astrophysics-title" hidden>
+            <div class="detail-grid">
+              <div class="detail-copy">
+                <h4>Behind the research</h4>
+                <p>I studied Blandford–Znajek energy extraction and magnetic reconnection to investigate mechanisms that help explain the power of active galactic nuclei and their jets.</p>
+                <p>[Add a few sentences about your specific contribution, methods, and next steps.]</p>
+              </div>
+              <aside class="result-panel">
+                <p class="eyebrow">Key finding</p>
+                <p>[Add your central conclusion.]</p>
+              </aside>
+            </div>
+            <div class="project-bottom">
+              <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
+              <div class="project-links" aria-label="Astrophysical energy extraction materials">
+                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
+                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                <a href="astrophysics-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              </div>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -303,11 +409,9 @@
     <div>
       <p class="eyebrow">Continue the conversation</p>
       <h2>Get in touch.</h2>
-
       <!-- CONTACT: replace the text below with your email. -->
       <p class="contact-email">[Add your email]</p>
     </div>
-
     <div class="footer-meta">
       <a href="https://github.com/aditya-9876543210">GitHub ↗</a>
       <p>© <span id="year">2026</span> Aditya Kaul</p>
@@ -315,22 +419,54 @@
   </footer>
 
   <script>
-    // Show the portrait only after it loads successfully.
+    // Portrait fallback. Preserve your existing photo filename above.
     const portrait = document.getElementById("portrait");
     const placeholder = document.getElementById("photo-placeholder");
-
     function updatePortrait() {
       const loaded = portrait.complete && portrait.naturalWidth > 0;
       portrait.hidden = !loaded;
       placeholder.hidden = loaded;
     }
-
     portrait.addEventListener("load", updatePortrait);
     portrait.addEventListener("error", updatePortrait);
     updatePortrait();
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    // Each project opens independently. The button also works with Enter/Space.
+    document.querySelectorAll("[data-project]").forEach(project => {
+      const preview = project.querySelector(".project-preview");
+      const button = project.querySelector(".project-toggle");
+      const label = button.querySelector(".toggle-label");
+      const panel = project.querySelector(".project-details");
+      const title = project.querySelector("h3").textContent;
+      preview.addEventListener("click", () => {
+        const open = button.getAttribute("aria-expanded") !== "true";
+        button.setAttribute("aria-expanded", String(open));
+        button.setAttribute("aria-label", (open ? "Collapse " : "Expand ") + title);
+        project.classList.toggle("is-open", open);
+        panel.hidden = !open;
+        label.textContent = open ? "Close project" : "Explore project";
+      });
+
+      const visual = project.querySelector(".project-visual");
+      const image = visual.querySelector("img");
+      const fullSizeLink = project.querySelector("[data-figure-link]");
+      function updateFigure() {
+        if (!image.complete) return;
+        const loaded = image.naturalWidth > 0;
+        visual.classList.toggle("has-image", loaded);
+        image.hidden = !loaded;
+        fullSizeLink.hidden = !loaded;
+      }
+      image.addEventListener("load", updateFigure);
+      image.addEventListener("error", updateFigure);
+      updateFigure();
+    });
+
+    // Paste a real URL into an empty href above to reveal its resource button.
+    document.querySelectorAll("[data-resource]").forEach(link => {
+      link.hidden = !(link.getAttribute("href") || "").trim();
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
