@@ -110,10 +110,32 @@
     .result-panel > p:last-child { margin-top: 12px; font-size: 14px; line-height: 1.8; }
     .project-bottom { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 22px; padding-top: 25px; margin-top: 27px; border-top: 1px solid var(--line); }
     .figure-caption { max-width: 440px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+    .project-resources { display: grid; gap: 10px; }
+    .resource-label { color: var(--tone); font: 11px/1.5 var(--mono); letter-spacing: .7px; text-transform: uppercase; }
     .project-links { display: flex; flex-wrap: wrap; gap: 9px; }
     .project-links a { padding: 8px 12px; border: 1px solid var(--tone); color: var(--tone); font: 11px/1.5 var(--mono); text-decoration: none; transition: background .2s, color .2s; }
     .project-links a:hover { background: var(--tone); color: white; }
     @keyframes reveal { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+
+    /* A SECOND DROPDOWN FOR EACH RESEARCH PAPER. */
+    .paper-reader { margin-top: 24px; }
+    .paper-summary { display: inline-flex; align-items: center; gap: 16px; min-height: 42px; padding: 10px 16px; border: 1px solid var(--tone); background: var(--tone); color: white; font: 12px/1.5 var(--mono); list-style: none; cursor: pointer; }
+    .paper-summary::-webkit-details-marker { display: none; }
+    .paper-summary::marker { content: ""; }
+    .paper-summary:hover { filter: brightness(.93); }
+    .paper-open-label { display: none; }
+    .paper-reader[open] .paper-closed-label { display: none; }
+    .paper-reader[open] .paper-open-label { display: inline; }
+    .paper-arrow { display: inline-block; transition: transform .2s; }
+    .paper-reader[open] .paper-arrow { transform: rotate(180deg); }
+    .paper-reader-content { margin-top: 16px; padding: 20px; background: #fff; border: 1px solid var(--line); }
+    .paper-reader-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .paper-reader-header h4 { font: 400 25px/1.2 var(--serif); }
+    .paper-reader-header a { color: var(--tone); font: 12px/1.5 var(--mono); }
+    .paper-empty { padding-block: 25px 8px; color: var(--muted); font-size: 14px; }
+    .paper-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .paper-frame { display: block; width: 100%; height: 75vh; min-height: 400px; max-height: 900px; margin-top: 16px; border: 1px solid var(--line); background: #f5f5f5; }
 
     /* CONTACT */
     .site-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; padding-block: 38px 42px; border-top: 1px solid var(--line); }
@@ -215,14 +237,14 @@
       </div>
       <div class="projects">
         <article class="research-project tone-rust" data-project aria-labelledby="aegis-title">
-          <!-- Click the preview or use the Explore project button. -->
+          <!-- Click the preview or use the Explore the research button. -->
           <div class="project-preview">
             <div class="project-copy">
               <p class="project-meta">01 / ASDRP · Numerical methods</p>
               <h3 id="aegis-title">AEGIS</h3>
               <p class="project-teaser">Numerical methods for accurate smooth flow and stable shock capture, from Euler to ideal MHD.</p>
               <button class="project-toggle" type="button" aria-expanded="false" aria-controls="aegis-details" aria-label="Expand AEGIS">
-                <span class="toggle-label">Explore project</span>
+                <span class="toggle-label">Explore the research</span>
                 <span class="toggle-icon" aria-hidden="true">+</span>
               </button>
             </div>
@@ -250,32 +272,54 @@
             </div>
             <div class="project-bottom">
               <p class="figure-caption">Figure depicts the Rayleigh-Taylor Instability, as simulated by AEGIS, at t=1.95</p>
-              <div class="project-links" aria-label="AEGIS materials">
-                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
-                <a href="aegis-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              <div class="project-resources">
+                <p class="resource-label">Explore the research</p>
+                <div class="project-links" aria-label="AEGIS materials">
+                  <!-- AEGIS REPO LINK: paste your repository URL between the href quotes below. -->
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>View the code ↗</a>
+                  <!-- Optional poster link. Blank resource links stay hidden automatically. -->
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                  <a href="aegis-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+                </div>
               </div>
             </div>
+
+            <!-- AEGIS PAPER PDF: put the exact uploaded PDF filename in data-pdf="" below.
+                 This is the only field to edit. Keep all existing image filenames unchanged. -->
+            <details class="paper-reader" id="aegis-paper" data-pdf-reader data-pdf="">
+              <summary class="paper-summary">
+                <span class="paper-closed-label">Read the paper</span>
+                <span class="paper-open-label">Hide the paper</span>
+                <span class="paper-arrow" aria-hidden="true">↓</span>
+              </summary>
+              <div class="paper-reader-content">
+                <div class="paper-reader-header">
+                  <h4>AEGIS paper</h4>
+                  <a href="" data-pdf-open target="_blank" rel="noopener" hidden>Open PDF ↗</a>
+                </div>
+                <p class="paper-empty" data-pdf-empty>Paper coming soon.</p>
+                <p class="paper-note" data-pdf-note hidden>You can also open the PDF in a separate tab.</p>
+                <iframe class="paper-frame" data-pdf-frame title="AEGIS research paper PDF reader" hidden></iframe>
+              </div>
+            </details>
           </div>
         </article>
 
         <article class="research-project tone-blue" data-project aria-labelledby="propulsion-title">
-          <!-- Click the preview or use the Explore project button. -->
+          <!-- Click the preview or use the Explore the research button. -->
           <div class="project-preview">
             <div class="project-copy">
               <p class="project-meta">02 / ASDRP · Plasma simulation</p>
-              <h3 id="propulsion-title">Computational propulsion</h3>
+              <h3 id="propulsion-title">ASCFD</h3>
               <p class="project-teaser">Computational models of plasma behavior and electric-propulsion systems.</p>
-              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="propulsion-details" aria-label="Expand Computational propulsion">
-                <span class="toggle-label">Explore project</span>
+              <button class="project-toggle" type="button" aria-expanded="false" aria-controls="propulsion-details" aria-label="Expand ASCFD">
+                <span class="toggle-label">Explore the research</span>
                 <span class="toggle-icon" aria-hidden="true">+</span>
               </button>
             </div>
             <figure class="project-visual">
               <!-- IMAGE: keep this filename, or use the exact name of your uploaded file. -->
-              <img class="project-image" src="propulsion-results.png" alt="Computational propulsion research figure" loading="lazy" decoding="async">
+              <img class="project-image" src="propulsion-results.png" alt="ASCFD research figure" loading="lazy" decoding="async">
               <div class="image-placeholder" aria-hidden="true">
                 <span class="figure-number">02</span>
                 <p>Research figure</p>
@@ -297,26 +341,47 @@
             </div>
             <div class="project-bottom">
               <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
-              <div class="project-links" aria-label="Computational propulsion materials">
-                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
-                <a href="propulsion-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              <div class="project-resources">
+                <p class="resource-label">Explore the research</p>
+                <div class="project-links" aria-label="ASCFD materials">
+                  <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>View the code ↗</a>
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                  <a href="propulsion-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+                </div>
               </div>
             </div>
+
+            <!-- ASCFD PAPER PDF: put the exact uploaded PDF filename in data-pdf="" below.
+                 This is the only field to edit. Keep all existing image filenames unchanged. -->
+            <details class="paper-reader" id="ascfd-paper" data-pdf-reader data-pdf="">
+              <summary class="paper-summary">
+                <span class="paper-closed-label">Read the paper</span>
+                <span class="paper-open-label">Hide the paper</span>
+                <span class="paper-arrow" aria-hidden="true">↓</span>
+              </summary>
+              <div class="paper-reader-content">
+                <div class="paper-reader-header">
+                  <h4>ASCFD paper</h4>
+                  <a href="" data-pdf-open target="_blank" rel="noopener" hidden>Open PDF ↗</a>
+                </div>
+                <p class="paper-empty" data-pdf-empty>Paper coming soon.</p>
+                <p class="paper-note" data-pdf-note hidden>You can also open the PDF in a separate tab.</p>
+                <iframe class="paper-frame" data-pdf-frame title="ASCFD research paper PDF reader" hidden></iframe>
+              </div>
+            </details>
           </div>
         </article>
 
         <article class="research-project tone-sage" data-project aria-labelledby="sees-title">
-          <!-- Click the preview or use the Explore project button. -->
+          <!-- Click the preview or use the Explore the research button. -->
           <div class="project-preview">
             <div class="project-copy">
               <p class="project-meta">03 / NASA SEES · Remote sensing</p>
               <h3 id="sees-title">Satellite land-cover analysis</h3>
               <p class="project-teaser">Comparing satellite land-cover classifications with ground observations.</p>
               <button class="project-toggle" type="button" aria-expanded="false" aria-controls="sees-details" aria-label="Expand Satellite land-cover analysis">
-                <span class="toggle-label">Explore project</span>
+                <span class="toggle-label">Explore the research</span>
                 <span class="toggle-icon" aria-hidden="true">+</span>
               </button>
             </div>
@@ -344,26 +409,47 @@
             </div>
             <div class="project-bottom">
               <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
-              <div class="project-links" aria-label="Satellite land-cover analysis materials">
-                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
-                <a href="sees-map.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              <div class="project-resources">
+                <p class="resource-label">Explore the research</p>
+                <div class="project-links" aria-label="Satellite land-cover analysis materials">
+                  <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>View the code ↗</a>
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                  <a href="sees-map.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+                </div>
               </div>
             </div>
+
+            <!-- SEES PAPER PDF: put the exact uploaded PDF filename in data-pdf="" below.
+                 This is the only field to edit. Keep all existing image filenames unchanged. -->
+            <details class="paper-reader" id="sees-paper" data-pdf-reader data-pdf="">
+              <summary class="paper-summary">
+                <span class="paper-closed-label">Read the paper</span>
+                <span class="paper-open-label">Hide the paper</span>
+                <span class="paper-arrow" aria-hidden="true">↓</span>
+              </summary>
+              <div class="paper-reader-content">
+                <div class="paper-reader-header">
+                  <h4>SEES paper</h4>
+                  <a href="" data-pdf-open target="_blank" rel="noopener" hidden>Open PDF ↗</a>
+                </div>
+                <p class="paper-empty" data-pdf-empty>Paper coming soon.</p>
+                <p class="paper-note" data-pdf-note hidden>You can also open the PDF in a separate tab.</p>
+                <iframe class="paper-frame" data-pdf-frame title="SEES research paper PDF reader" hidden></iframe>
+              </div>
+            </details>
           </div>
         </article>
 
         <article class="research-project tone-gold" data-project aria-labelledby="astrophysics-title">
-          <!-- Click the preview or use the Explore project button. -->
+          <!-- Click the preview or use the Explore the research button. -->
           <div class="project-preview">
             <div class="project-copy">
               <p class="project-meta">04 / Horizon · Astrophysics</p>
               <h3 id="astrophysics-title">Astrophysical energy extraction</h3>
               <p class="project-teaser">Investigating energy extraction mechanisms behind active galactic nuclei and their jets.</p>
               <button class="project-toggle" type="button" aria-expanded="false" aria-controls="astrophysics-details" aria-label="Expand Astrophysical energy extraction">
-                <span class="toggle-label">Explore project</span>
+                <span class="toggle-label">Explore the research</span>
                 <span class="toggle-icon" aria-hidden="true">+</span>
               </button>
             </div>
@@ -391,14 +477,35 @@
             </div>
             <div class="project-bottom">
               <p class="figure-caption">[Add one short sentence explaining what this figure shows.]</p>
-              <div class="project-links" aria-label="Astrophysical energy extraction materials">
-                <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Paper ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>GitHub Repo ↗</a>
-                <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
-                <a href="astrophysics-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+              <div class="project-resources">
+                <p class="resource-label">Explore the research</p>
+                <div class="project-links" aria-label="Astrophysical energy extraction materials">
+                  <!-- LINKS: paste a URL inside href="" to show that button. Blank links stay hidden. -->
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>View the code ↗</a>
+                  <a href="" data-resource target="_blank" rel="noopener" hidden>Poster ↗</a>
+                  <a href="astrophysics-results.png" data-figure-link target="_blank" rel="noopener" hidden>View figure ↗</a>
+                </div>
               </div>
             </div>
+
+            <!-- Astrophysical energy extraction PAPER PDF: put the exact uploaded PDF filename in data-pdf="" below.
+                 This is the only field to edit. Keep all existing image filenames unchanged. -->
+            <details class="paper-reader" id="astrophysics-paper" data-pdf-reader data-pdf="">
+              <summary class="paper-summary">
+                <span class="paper-closed-label">Read the paper</span>
+                <span class="paper-open-label">Hide the paper</span>
+                <span class="paper-arrow" aria-hidden="true">↓</span>
+              </summary>
+              <div class="paper-reader-content">
+                <div class="paper-reader-header">
+                  <h4>Astrophysical energy extraction paper</h4>
+                  <a href="" data-pdf-open target="_blank" rel="noopener" hidden>Open PDF ↗</a>
+                </div>
+                <p class="paper-empty" data-pdf-empty>Paper coming soon.</p>
+                <p class="paper-note" data-pdf-note hidden>You can also open the PDF in a separate tab.</p>
+                <iframe class="paper-frame" data-pdf-frame title="Astrophysical energy extraction research paper PDF reader" hidden></iframe>
+              </div>
+            </details>
           </div>
         </article>
       </div>
@@ -444,7 +551,7 @@
         button.setAttribute("aria-label", (open ? "Collapse " : "Expand ") + title);
         project.classList.toggle("is-open", open);
         panel.hidden = !open;
-        label.textContent = open ? "Close project" : "Explore project";
+        label.textContent = open ? "Close project" : "Explore the research";
       });
 
       const visual = project.querySelector(".project-visual");
@@ -466,6 +573,29 @@
     document.querySelectorAll("[data-resource]").forEach(link => {
       link.hidden = !(link.getAttribute("href") || "").trim();
     });
+    // The native Read the paper dropdown loads its PDF only when opened.
+    document.querySelectorAll("[data-pdf-reader]").forEach(reader => {
+      const pdf = (reader.getAttribute("data-pdf") || "").trim();
+      if (!pdf) return;
+      const frame = reader.querySelector("[data-pdf-frame]");
+      const openLink = reader.querySelector("[data-pdf-open]");
+      const empty = reader.querySelector("[data-pdf-empty]");
+      const note = reader.querySelector("[data-pdf-note]");
+      openLink.setAttribute("href", pdf);
+      openLink.hidden = false;
+      empty.hidden = true;
+      note.hidden = false;
+      const inlineSupported = navigator.pdfViewerEnabled !== false;
+      if (!inlineSupported) note.textContent = "Open the PDF in a separate tab to read it.";
+      function loadPaper() {
+        if (!reader.open || !inlineSupported) return;
+        if (!frame.hasAttribute("src")) frame.setAttribute("src", pdf);
+        frame.hidden = false;
+      }
+      reader.addEventListener("toggle", loadPaper);
+      loadPaper();
+    });
+
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
