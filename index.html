@@ -43,6 +43,30 @@
     nav { display: flex; flex-wrap: wrap; gap: 24px; }
     nav a { font-size: 12px; text-decoration: none; }
 
+    /* GITHUB ACCOUNT PICKER */
+    nav { align-items: center; }
+    .github-accounts { position: relative; display: inline-block; text-align: left; z-index: 20; }
+    .github-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 36px; padding: 6px 10px; margin: -6px -10px; border: 1px solid transparent; border-radius: 3px; color: var(--ink); font: 12px/1.5 var(--sans); list-style: none; cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
+    .github-trigger::-webkit-details-marker { display: none; }
+    .github-trigger::marker { content: ""; }
+    .github-trigger:hover, .github-accounts[open] > .github-trigger { color: var(--accent); border-color: var(--line); background: #fcfaf6; }
+    .github-chevron { width: 12px; height: 12px; transition: transform .2s; }
+    .github-accounts[open] .github-chevron { transform: rotate(180deg); }
+    .github-menu { position: absolute; top: calc(100% + 13px); right: 0; width: 250px; max-width: calc(100vw - 36px); padding: 10px; background: #fcfaf6; border: 1px solid var(--line); border-top: 2px solid var(--accent); border-radius: 4px; box-shadow: 0 14px 36px rgba(36,48,43,.13); }
+    .github-menu .github-menu-title { margin: 0; padding: 5px 10px 9px; color: var(--muted); font: 9px/1.5 var(--mono); letter-spacing: 1.2px; text-transform: uppercase; }
+    .github-menu a { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 62px; padding: 10px; border-radius: 2px; color: var(--ink); text-decoration: none; font: 14px/1.5 var(--sans); transition: background .2s, color .2s; }
+    .github-menu a + a { border-top: 1px solid var(--line); }
+    .github-menu a:hover, .github-menu a:focus-visible { color: var(--accent); background: #f0e7dd; }
+    .github-account-name { display: block; font-weight: 600; }
+    .github-account-note { display: block; margin-top: 2px; color: var(--muted); font: 11px/1.5 var(--sans); }
+    .github-account-arrow { color: var(--accent); font-size: 17px; }
+    .github-menu a[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+    .github-accounts--footer .github-menu { top: auto; bottom: calc(100% + 13px); }
+    @media (max-width: 760px) {
+      .github-trigger { font-size: 11px; }
+      .github-accounts--footer .github-menu { right: auto; left: 0; }
+    }
+
     /* TITLE + PORTRAIT */
     .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 36px; border: 1px solid var(--line); overflow: hidden; }
     .hero-copy { position: relative; z-index: 1; min-width: 0; padding: 52px 64px 52px 48px; }
@@ -198,7 +222,25 @@
     <nav aria-label="Main navigation">
       <a href="#research">Research</a>
       <a href="#contact">Contact</a>
-      <a href="https://github.com/aditya-9876543210">GitHub ↗</a>
+      <details class="github-accounts" data-github-dropdown>
+        <summary class="github-trigger" aria-label="Choose a GitHub account">
+          <span>GitHub</span>
+          <svg class="github-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+            <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="github-menu" role="group" aria-label="GitHub accounts">
+          <p class="github-menu-title">GitHub accounts</p>
+          <a href="https://github.com/aditya-9876543210" target="_blank" rel="noopener noreferrer">
+            <span><span class="github-account-name">Personal</span><small class="github-account-note">Personal projects</small></span>
+            <span class="github-account-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://github.com/adityakaul9" data-asdrp-profile target="_blank" rel="noopener noreferrer">
+            <span><span class="github-account-name">ASDRP</span><small class="github-account-note">Research &amp; collaborations</small></span>
+            <span class="github-account-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </details>
     </nav>
   </header>
 
@@ -516,12 +558,76 @@
       <p class="contact-email">adityakaul909@gmail.com</p>
     </div>
     <div class="footer-meta">
-      <a href="https://github.com/aditya-9876543210">GitHub ↗</a>
+      <details class="github-accounts github-accounts--footer" data-github-dropdown>
+        <summary class="github-trigger" aria-label="Choose a GitHub account">
+          <span>GitHub</span>
+          <svg class="github-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+            <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="github-menu" role="group" aria-label="GitHub accounts">
+          <p class="github-menu-title">GitHub accounts</p>
+          <a href="https://github.com/aditya-9876543210" target="_blank" rel="noopener noreferrer">
+            <span><span class="github-account-name">Personal</span><small class="github-account-note">Personal projects</small></span>
+            <span class="github-account-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://github.com/adityakaul9" data-asdrp-profile target="_blank" rel="noopener noreferrer">
+            <span><span class="github-account-name">ASDRP</span><small class="github-account-note">Research &amp; collaborations</small></span>
+            <span class="github-account-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </details>
       <p>© <span id="year">2026</span> Aditya Kaul</p>
     </div>
   </footer>
 
   <script>
+    // GITHUB ACCOUNT: your ASDRP profile URL, shared by both dropdowns.
+    // Both dropdowns use this value; the Personal account is already linked above.
+    const asdrpGitHubUrl = "https://github.com/adityakaul9";
+    if (asdrpGitHubUrl.trim()) {
+      document.querySelectorAll("[data-asdrp-profile]").forEach(link => {
+        link.setAttribute("href", asdrpGitHubUrl.trim());
+        link.removeAttribute("aria-disabled");
+        link.removeAttribute("tabindex");
+      });
+    }
+
+    // Native details provides Enter/Space activation and a fallback without JavaScript.
+    const githubDropdowns = Array.from(document.querySelectorAll("[data-github-dropdown]"));
+    githubDropdowns.forEach(dropdown => {
+      const trigger = dropdown.querySelector("summary");
+      dropdown.addEventListener("toggle", () => {
+        if (dropdown.open) githubDropdowns.forEach(other => {
+          if (other !== dropdown) other.open = false;
+        });
+      });
+      dropdown.addEventListener("keydown", event => {
+        if (event.key === "Escape" && dropdown.open) {
+          event.preventDefault();
+          dropdown.open = false;
+          trigger.focus();
+        } else if ((event.key === "ArrowDown" || event.key === "ArrowUp") && event.target === trigger) {
+          event.preventDefault();
+          dropdown.open = true;
+          const links = Array.from(dropdown.querySelectorAll("a[href]"));
+          const next = event.key === "ArrowUp" ? links[links.length - 1] : links[0];
+          if (next) next.focus();
+        }
+      });
+      dropdown.addEventListener("focusout", event => {
+        if (!dropdown.contains(event.relatedTarget)) dropdown.open = false;
+      });
+      dropdown.querySelectorAll("a[href]").forEach(link => {
+        link.addEventListener("click", () => { dropdown.open = false; });
+      });
+    });
+    document.addEventListener("click", event => {
+      githubDropdowns.forEach(dropdown => {
+        if (dropdown.open && !dropdown.contains(event.target)) dropdown.open = false;
+      });
+    });
+
     // Portrait fallback. Preserve your existing photo filename above.
     const portrait = document.getElementById("portrait");
     const placeholder = document.getElementById("photo-placeholder");
